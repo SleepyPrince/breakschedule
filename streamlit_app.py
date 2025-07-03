@@ -1,6 +1,4 @@
-import streamlit as st
+from app import app
 
-st.title("🎈 My new app")
-st.write(
-    "Let's start building! For help and inspiration, head over to [docs.streamlit.io](https://docs.streamlit.io/)."
-)
+if __name__ == '__main__':
+  app.run(host='0.0.0.0', port=5000, debug=False)

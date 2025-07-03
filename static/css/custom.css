@@ -1,0 +1,209 @@
+/* Custom styles for the optimization solver application */
+
+/* Ensure consistent spacing */
+.card {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    border: 1px solid var(--bs-border-color);
+}
+
+/* Progress bar animation */
+.progress-bar {
+    transition: width 0.3s ease-in-out;
+}
+
+/* Form styling improvements */
+.variable-row, .constraint-row {
+    position: relative;
+}
+
+/* Remove button hover effect */
+.remove-variable:hover, .remove-constraint:hover {
+    transform: scale(1.05);
+}
+
+/* Status badges */
+.badge {
+    font-size: 0.875em;
+}
+
+/* Results table styling */
+.table th {
+    border-top: none;
+    font-weight: 600;
+}
+
+.table code {
+    background-color: var(--bs-secondary-bg);
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.875em;
+}
+
+/* Alert styling */
+.alert {
+    border: none;
+    border-radius: 0.5rem;
+}
+
+.alert-heading {
+    margin-bottom: 0.75rem;
+}
+
+/* Loading states */
+.btn:disabled {
+    opacity: 0.65;
+}
+
+/* Form validation feedback */
+.is-invalid {
+    border-color: var(--bs-danger);
+}
+
+.invalid-feedback {
+    display: block;
+    color: var(--bs-danger);
+    font-size: 0.875em;
+    margin-top: 0.25rem;
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+    .variable-row .col-4,
+    .variable-row .col-3,
+    .variable-row .col-2 {
+        margin-bottom: 0.5rem;
+    }
+    
+    .constraint-row .col-5,
+    .constraint-row .col-2,
+    .constraint-row .col-3 {
+        margin-bottom: 0.5rem;
+    }
+}
+
+/* Smooth transitions */
+.card, .btn, .form-control, .form-select {
+    transition: all 0.15s ease-in-out;
+}
+
+/* Focus states */
+.form-control:focus, .form-select:focus {
+    box-shadow: 0 0 0 0.2rem rgba(var(--bs-primary-rgb), 0.25);
+}
+
+/* Custom scrollbar for webkit browsers */
+.table-responsive::-webkit-scrollbar {
+    height: 8px;
+}
+
+.table-responsive::-webkit-scrollbar-track {
+    background: var(--bs-secondary-bg);
+    border-radius: 4px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb {
+    background: var(--bs-border-color);
+    border-radius: 4px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb:hover {
+    background: var(--bs-secondary);
+}
+
+.shift-btn {
+    min-width: 75px;
+    margin: 2px 0 2px 0;
+}
+
+#setup_table table{
+    text-align: center;
+    width: 100%;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+}
+
+#position_select {
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+}
+
+#resultContent table{
+    text-align: center;
+    width: 100%;
+}
+
+#setup_table .shift-col, #resultContent .shift-col {
+    width: 50px;
+}
+
+#setup_table .time-col, #resultContent .time-col {
+    width: 85px;
+    font-size: larger;
+    line-height: 1.1;
+    font-weight: normal;
+}
+
+#setup_table .span-col, #resultContent .span-col {
+    width: auto;
+}
+
+#setup_table .staff-row, #resultContent .staff-row {
+    height: 30px;
+}
+
+#setup_table input[type="text"].form-control {
+    border: 0;
+    box-shadow: none;
+    text-align: center;
+}
+
+#position_select label {
+    display:inline-block;
+    width: 80px;
+}
+
+.form-select.no-arrow,
+select.no-arrow {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: none !important; /* Remove Bootstrap's arrow */
+  padding-right: 0.5rem;               /* Optional: adjust padding */
+  background-position: right 0.75rem center;
+  border: 0px;
+  text-align: center;
+  width: 100%;
+}
+
+#constraint_table .form-select.no-arrow,
+#constraint_table select.no-arrow {
+  border: 1px solid var(--bs-border-color);
+}
+
+#constraint_table table {
+    table-layout: fixed;
+}
+
+@media (min-width: 1580px) {
+    .container {
+        max-width: 1550px !important;
+    }
+}
+
+html {
+  scrollbar-gutter: stable;
+}
+
+body.modal-open {
+    padding-right: 0 !important; /* Prevents horizontal scrollbar when modal is open */
+}
+
+.modal {
+    padding-right: 0 !important;
+}
+
+.rating-highlight {
+    color: deepskyblue;
+}

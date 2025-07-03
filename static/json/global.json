@@ -1,0 +1,128 @@
+{
+  "shifts": {
+    "E1": {
+      "start": "0745",
+      "end": "1500"
+    },
+    "E2": {
+      "start": "0745",
+      "end": "1600"
+    },
+    "E6": {
+      "start": "0745",
+      "end": "1500"
+    },
+    "E7": {
+      "start": "0745",
+      "end": "1600"
+    },
+    "F2": {
+      "start": "0845",
+      "end": "1700"
+    },
+    "F7": {
+      "start": "0845",
+      "end": "1700"
+    },
+    "G1": {
+      "start": "0945",
+      "end": "1600"
+    },
+    "G7": {
+      "start": "0945",
+      "end": "1600"
+    },
+    "H1": {
+      "start": "1045",
+      "end": "1900"
+    },
+    "H7": {
+      "start": "1045",
+      "end": "1900"
+    },
+    "A*": {
+      "start": "1415",
+      "end": "2200"
+    },
+    "A1": {
+      "start": "1430",
+      "end": "2200"
+    },
+    "A2": {
+      "start": "1430",
+      "end": "2300"
+    },
+    "A6": {
+      "start": "1430",
+      "end": "2200"
+    },
+    "C1": {
+      "start": "1530",
+      "end": "2300"
+    },
+    "C2": {
+      "start": "1545",
+      "end": "2345"
+    },
+    "N1": {
+      "start": "2145",
+      "end": "0800"
+    },
+    "N6": {
+      "start": "2145",
+      "end": "0800"
+    }
+  },
+  "shift_sort_order": "EFGHACN",
+  "positions": {
+    "TWR": [
+      "AMM",
+      "AMN",
+      "AMS",
+      "AMZ",
+      "CDC",
+      "GM1",
+      "GM1/2",
+      "GM1/3",
+      "GM2",
+      "GM2/3",
+      "GM3",
+      "GM4",
+      "GMN",
+      "GMS",
+      "TDP",
+      "ZNC"
+    ],
+    "APP": [
+      "APP",
+      "FAD",
+      "DEP",
+      "DN",
+      "DS",
+      "DPL"
+    ],
+    "TMC": [
+      "MS",
+      "MM",
+      "MD",
+      "MW",
+      "FLC",
+      "TPL"
+    ],
+    "AREA": [
+      "PLE",
+      "EE",
+      "PLW",
+      "EW",
+      "PLS",
+      "ES"
+    ]
+  },
+  "ignored_penalties": [
+    "position_evenness",
+    "position_constraint",
+    "position_assignment",
+    "long_breaks"
+  ],
+  "gap_ratio": 0.002
+}

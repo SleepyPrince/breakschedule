@@ -1,0 +1,268 @@
+{% extends "base.html" %}
+
+{% block setup %}
+<div class="container">
+    <div class="row">
+        <!-- shift template select -->
+        <div class="col-5">
+            <div class="card">
+                <div class="card-header" data-bs-toggle="collapse" data-bs-target="#shift_select">
+                    <h5 class="card-title mb-0">
+                        <i class="fa-solid fa-business-time me-2"></i>
+                        Shift
+                    </h5>
+                </div>
+                <div id="shift_select" class="collapse show">
+                    <div class="card-body">
+                        <div class="btn-group" role="group">
+                            {% for template in template_data %}
+                            <button type="button" class="btn btn-primary"
+                                data-type="shift_select" data-idx="{{ loop.index0 | int }}">{{ template.name }}</button>
+                            {% endfor %}
+                            <button type="button" class="btn btn-warning" id="configResetBtn">Clear</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- add staff -->
+        <div class="col-7">
+            <div class="card">
+                <div class="card-header" data-bs-toggle="collapse" data-bs-target="#staff_select">
+                    <h5 class="card-title mb-0">
+                        <i class="fa-solid fa-user-plus me-2"></i>
+                        Staff
+                    </h5>
+                </div>
+                <div id="staff_select" class="collapse">
+                    <div class="card-body d-flex flex-wrap row-gap-2 gap-3">
+                        {% for shift in global_data.get("shifts", []) %}
+                        {% if loop.index0 == 0 %}
+                            <div class="btn-group" role="group">
+                        {% elif loop.previtem and shift[0] != loop.previtem[0] %}
+                            </div>
+                            <div class="btn-group" role="group">
+                        {% endif %}
+                        <button type="button" class="btn btn-primary shift-btn" data-type="add_staff" data-shift="{{ shift }}">
+                            {{ shift }}
+                        </button>
+                        {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- position select -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card mt-3">
+                <div class="card-header" data-bs-toggle="collapse" data-bs-target="#position_select">
+                    <h5 class="card-title mb-0">
+                        <i class="fa-solid fa-crosshairs me-2"></i>
+                        Positions
+                    </h5>
+                </div>
+                <div id="position_select" class="collapse">
+                    <div class="card-body row">
+                        {% for position in global_data.get("positions", []) %}
+                        <div class="col px-2">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title mb-0 text-center">
+                                        {{ position }}
+                                    </h5>
+                                </div>
+                                <div class="card-body p-2">
+                                    <div style="grid-template-columns: 1fr 1fr 1fr;" class="d-grid">
+                                        {% for p in global_data.positions[position] %}
+                                        <div>
+                                            <label class="form-check-label">
+                                                <input type="checkbox" class="form-check-input"
+                                                 name="position" value="{{ p }}"> {{ p }}</label>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        <div class="col px-2">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title mb-0 text-center">
+                                        Custom
+                                    </h5>
+                                </div>
+                                <div class="card-body p-2">
+                                    <div class="mb-2" id="customPositions">
+                                    </div>
+                                    <div class="row g-2">
+                                    <div class="col-8">
+                                        <input type="text" class="form-control" id="customPositionName">
+                                    </div>
+                                    <div class="col-4">
+                                        <button type="button" class="form-control" id="customPositionAddBtn">add</button>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- config table -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card mt-3">
+                <div class="card-header" data-bs-toggle="collapse" data-bs-target="#config_table">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-list-check me-2 me-2"></i>
+                        Assignment
+                    </h5>
+                </div>
+                <div id="config_table" class="collapse show">
+                    <div class="card-body">
+                        <div id="setup_table"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="staffModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staffModalName">Staff</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body border-bottom">
+                    <h6>Shift</h6>
+                    {% for shift in global_data.get("shifts", []) %}
+                    <button type="button" class="btn btn-primary shift-btn"data-shift="{{ shift }}">{{ shift }}</button>
+                    {% endfor %}
+                    <div id="staffModalRating" class="d-none">
+                        <h6 class="pt-3">Rating</h6>
+                        <div id="modalRatings"></div>
+                    </div>
+                </div>
+                <div class="row m-3">
+                    <div class="col-3 text-start">
+                        <button type="button" class="btn btn-sm btn-danger" data-bs-dismiss="modal" id="staffModalRemoveBtn">Remove</button>
+                    </div>
+                    <div class="col-9 text-end">
+                        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal" id="staffModalSaveBtn">Ok</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block constraint %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card mt-3">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">
+                        <i class="fa-solid fa-scale-balanced me-2s"></i>
+                        Constraints
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="btn-group" role="group" id="addConstraintButtons">
+                        <button type="button" class="btn btn-primary" data-constraint-type="one_set">One Set</button>
+                        <button type="button" class="btn btn-primary" data-constraint-type="sum">Sum</button>
+                        <button type="button" class="btn btn-primary" data-constraint-type="transition">Transistion</button>
+                    </div>
+                    <div id="constraint_table">
+                    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container mb-3">
+    <div class="row">
+        <div class="col-12">
+            <div class="card mt-3">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-chart-bar me-2"></i>
+                        Progress & Result
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid">
+                        <button class="btn btn-primary" id="solveBtn" tabindex="-1">
+                            <i class="fas fa-play me-2"></i>
+                            Generate
+                        </button>
+                    </div>
+                    <div id="solverStatus" class="d-none">
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="fw-semibold">Progress</span>
+                                <span id="progressText">0%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" id="progressBar" role="progressbar" style="width: 0%"
+                                    aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <strong>Status:</strong>
+                            <span id="statusText" class="badge bg-secondary">Initializing</span>
+                        </div>
+                    </div>
+
+                    <div id="results" class="d-none">
+                        <div class="alert alert-success">
+                            <h6 class="alert-heading">
+                                <i class="fas fa-check-circle me-2"></i>
+                                Solution Found
+                            </h6>
+                            <div id="resultContent"></div>
+                        </div>
+                    </div>
+
+                    <div id="errorMessage" class="d-none">
+                        <div class="alert alert-danger">
+                            <h6 class="alert-heading">
+                                <i class="fas fa-exclamation-triangle me-2"></i>
+                                Error
+                            </h6>
+                            <div id="errorContent"></div>
+                        </div>
+                    </div>
+
+                    <div id="noSolutionMessage" class="d-none">
+                        <div class="alert alert-warning">
+                            <h6 class="alert-heading">
+                                <i class="fas fa-info-circle me-2"></i>
+                                No Solution
+                            </h6>
+                            <div id="noSolutionContent"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
